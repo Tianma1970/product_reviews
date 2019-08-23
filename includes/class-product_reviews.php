@@ -79,6 +79,14 @@ class Product_reviews {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
+		$this->register_filter_the_content();
+
+		$this->add_cpt();
+		$this->add_ct();
+
+		$this->init_acf();
+
+
 	}
 
 	/**
@@ -110,6 +118,16 @@ class Product_reviews {
 		 * of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-product_reviews-i18n.php';
+
+		/**
+		 * Including ACF
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/acf/acf.php';
+		
+		/**
+		 * Including CPT
+		 */
+		//require_once plugin_dir_path( dirname( __FILE__ ) ) . //'includes/cpt/';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -213,6 +231,315 @@ class Product_reviews {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Register a function to filter the content
+	 */
+	public function register_filter_the_content() {
+		add_filter('the_content', [$this, 'filter_the_content']);
+	}
+
+	/**
+	 * Functon for filtering the content
+	 */
+	public function filter_the_content($content) {
+		//if posttype is pr_product
+		if(get_post_type() === 'pr_product') {
+			
+			//find taxonomy pr_product_type for current product
+			$products = get_the_term_list(get_the_ID(), 'pr_product_type', 'Product types: ', '.');
+
+			//Append div with terms if any
+			//var_dump($products);
+			$content .= '<div class="pr-product-type">' . $products . '</div>';
+
+			if(function_exists('get_field')) {
+				$price = get_field('price');
+
+				$content .= '<div class="product-details">';
+				$content .= '<h1><strong></strong>' . __('Product Info ', 'product_reviews') . '</strong></h1>';
+				$content .= '<p>' . __('Price: ', 'product_reviews') . $price . '</p>';
+				//show only if there are submittet data
+				if($products !== false) {
+					$content .= '<span class="products">' . __('Products: ', 'product_reviews') . '</span' . $products .= '<br>';
+				}
+			}
+			//return the modified content
+			return $content;
+
+		}
+		
+		if(get_post_type() === 'pr_review') {
+			
+			//Append div with terms if any
+			$content .= '<div class="pr-review">' . $reviews . '</div>';
+
+			if(function_exists('get_field')) {
+				$rating = get_field('rating');
+
+				$content .= '<div class="product-details">';
+				$content .= '<h1><strong></strong>' . __('Review Info ', 'product_reviews') . '</strong></h1>';
+				$content .= '<p>' . __('Rating: ', 'product_reviews') . $rating . '</p>';
+				//show only if there are submittet data
+				// if($products !== false) {
+				// 	$content .= '<span class="products">' . __('Products: ', 'product_reviews') . '</span' . $products .= '<br>';
+				// }
+			}
+			//return the modified content
+			return $content;
+
+		}
+		//return the unmodified content
+		return $content;
+	}
+
+	/**
+	 * Add functions to be run through the init hook
+	 */
+	public function add_cpt() {
+		//Add hook for registration of CPT
+		add_action('init', [$this, 'register_cpts']);
+	}
+
+	public function add_ct() { 
+		//Add hook for registration of CT
+		add_action('init', [$this, 'register_cts']);
+		//Add hook for registration of ACF
+
+	}
+
+	public function register_cpts() {
+		
+		/**
+		 * Post Type: Products.
+		 */
+
+		$labels = array(
+			"name" => __( "Products", "twentysixteen" ),
+			"singular_name" => __( "Product", "twentysixteen" ),
+		);
+
+		$args = array(
+			"label" => __( "Products", "twentysixteen" ),
+			"labels" => $labels,
+			"description" => "",
+			"public" => true,
+			"publicly_queryable" => true,
+			"show_ui" => true,
+			"delete_with_user" => false,
+			"show_in_rest" => true,
+			"rest_base" => "",
+			"rest_controller_class" => "WP_REST_Posts_Controller",
+			"has_archive" => false,
+			"show_in_menu" => true,
+			"show_in_nav_menus" => true,
+			"exclude_from_search" => false,
+			"capability_type" => "post",
+			"map_meta_cap" => true,
+			"hierarchical" => false,
+			"rewrite" => array( "slug" => "pr_product", "with_front" => 	true ),
+			"query_var" => true,
+			"menu_icon" => "dashicons-products",
+			"supports" => array( "title", "editor", "thumbnail", "excerpt",	 "custom-fields" ),
+			"taxonomies" => array( "pr_product_type" ),
+		);
+
+		register_post_type( "pr_product", $args );
+	
+
+	//add_action( 'init', 'cptui_register_my_cpts_pr_product' );
+
+		//Post type Product Review
+
+		//function cptui_register_my_cpts_pr_review() {
+
+	/**
+	 * Post Type: Reviews.
+	 */
+
+	$labels = array(
+		"name" => __( "Reviews", "twentysixteen" ),
+		"singular_name" => __( "Review", "twentysixteen" ),
+	);
+
+		$args = array(
+			"label" => __( "Reviews", "twentysixteen" ),
+			"labels" => $labels,
+			"description" => "",
+			"public" => true,
+			"publicly_queryable" => true,
+			"show_ui" => true,
+			"delete_with_user" => false,
+			"show_in_rest" => true,
+			"rest_base" => "",
+			"rest_controller_class" => "WP_REST_Posts_Controller",
+			"has_archive" => false,
+			"show_in_menu" => true,
+			"show_in_nav_menus" => true,
+			"exclude_from_search" => false,
+			"capability_type" => "post",
+			"map_meta_cap" => true,
+			"hierarchical" => false,
+			"rewrite" => array( "slug" => "pr_review", "with_front" => 	true ),
+			"query_var" => true,
+			"menu_icon" => "dashicons-welcome-write-blog",
+			"supports" => array( "title", "editor", "thumbnail" ),
+		);
+
+		register_post_type( "pr_review", $args );
+	//}
+
+	add_action( 'init', 'cptui_register_my_cpts_pr_review' );
+
+
+	}
+	
+
+	public function init_acf(){
+			//Add filter to fix ACF assests URL
+			add_filter('acf/settings/url', function(){
+				return plugin_dir_url(__FILE__) . 'acf/';
+			});
+
+		//Add field group Product Details
+
+		if( function_exists('acf_add_local_field_group') ):
+
+		acf_add_local_field_group(array(
+			'key' => 'group_5d5faa8248d5b',
+			'title' => 'Product Details',
+			'fields' => array(
+				array(
+					'key' => 'field_5d5faa9452d27',
+					'label' => 'Price',
+					'name' => 'price',
+					'type' => 'number',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '$',
+					'min' => '',
+					'max' => '',
+					'step' => '',
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'pr_product',
+					),
+				),
+			),
+			'menu_order' => 0,
+			'position' => 'normal',
+			'style' => 'default',
+			'label_placement' => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen' => '',
+			'active' => true,
+			'description' => '',
+		));
+
+		endif;
+
+		//Add field group Review Details
+
+		if( function_exists('acf_add_local_field_group') ):
+
+		acf_add_local_field_group(array(
+			'key' => 'group_5d5fabd15f6ad',
+			'title' => 'Review Details',
+			'fields' => array(
+				array(
+					'key' => 'field_5d5fabe578fa1',
+					'label' => 'Rating',
+					'name' => 'rating',
+					'type' => 'range',
+					'instructions' => 'Here you can give a rating to a 	product',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'min' => '',
+					'max' => 5,
+					'step' => '',
+					'prepend' => '',
+					'append' => 'points',
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'pr_review',
+					),
+				),
+			),
+			'menu_order' => 0,
+			'position' => 'normal',
+			'style' => 'default',
+			'label_placement' => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen' => '',
+			'active' => true,
+			'description' => '',
+			));
+
+	endif;
+
+
+	
+	}
+
+	//Register Custom Taxonomies
+	public function register_cts() {
+
+		/**
+		 * Taxonomy: Product types.
+		 */
+
+		$labels = array(
+			"name" => __( "Product types", "twentysixteen" ),
+			"singular_name" => __( "Product type", "twentysixteen" ),
+		);
+
+		$args = array(
+			"label" => __( "Product types", "twentysixteen" ),
+			"labels" => $labels,
+			"public" => true,
+			"publicly_queryable" => true,
+			"hierarchical" => true,
+			"show_ui" => true,
+			"show_in_menu" => true,
+			"show_in_nav_menus" => true,
+			"query_var" => true,
+			"rewrite" => array( 'slug' => 'pr_product_type', 'with_front' 	=> true, ),
+			"show_admin_column" => false,
+			"show_in_rest" => true,
+			"rest_base" => "pr_product_type",
+			"rest_controller_class" => "WP_REST_Terms_Controller",
+			"show_in_quick_edit" => false,
+			);
+		register_taxonomy( "pr_product_type", array( "pr_product" ), $args 	);
+
+add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
+
 	}
 
 }
