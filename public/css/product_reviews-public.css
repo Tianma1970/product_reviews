@@ -2,3 +2,18 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .pr-product-type {
+     background-color:#ccc;
+     margin-top: 1rem;
+     padding: 1rem 1.25rem;
+     border-radius: 10px;
+ }
+
+ .product-details {
+     background-color:#ccc;
+     margin-top: 1rem;
+     padding: 1rem 1.25rem;
+     border-radius: 10px;
+     
+ }
