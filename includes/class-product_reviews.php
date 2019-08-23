@@ -277,10 +277,12 @@ class Product_reviews {
 
 			if(function_exists('get_field')) {
 				$rating = get_field('rating');
+				$product_name = get_the_title();
 
 				$content .= '<div class="product-details">';
 				$content .= '<h1><strong></strong>' . __('Review Info ', 'product_reviews') . '</strong></h1>';
 				$content .= '<p>' . __('Rating: ', 'product_reviews') . $rating . '</p>';
+				$content .= '<p>' . __('Product: ', 'product_reviews') . $product_name . '</p>';
 				//show only if there are submittet data
 				// if($products !== false) {
 				// 	$content .= '<span class="products">' . __('Products: ', 'product_reviews') . '</span' . $products .= '<br>';
