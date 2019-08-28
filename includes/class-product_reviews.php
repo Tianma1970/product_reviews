@@ -86,6 +86,9 @@ class Product_reviews {
 
 		$this->init_acf();
 
+		//add shortcode
+		//$this->product_review_shortcode();
+
 
 	}
 
@@ -543,5 +546,72 @@ class Product_reviews {
 add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 
 	}
-
+//The Shortcode
+	
 }
+		function pr_shortcode() {
+			$pr_product = new WP_Query([ 
+				'post_type'			=> 'pr_product',
+				'posts_per_page'	=> 3,
+
+				]);
+				$output = "<h2>Products</h2>";
+				
+				if($pr_product->have_posts()) {
+					$output .= "<ul>";
+					while($pr_product->have_posts()) {
+						$pr_product->the_post(); 
+
+						
+						$output .= "<li>";
+						$output .= "<a href='" . get_the_permalink() . "'>";
+						$output .= get_the_title();
+						$output .= "<p><i></i>";
+						$output .= "</a>";
+						$output .= "<small>";
+						$output .= "Price: ";
+						$output .= get_field('price');
+						$output .= " &euro;";
+						$output .= "</small>";
+						$output .= "</p></i>";;
+						$output .= "</li>";
+						$output .= "<hr>";
+						
+					}
+					wp_reset_postdata();
+					$output .= "</ul>";
+				} else {
+					$output .= "No Products available";
+				}
+				return $output;
+		}
+	
+		function pr_init() {
+			add_shortcode('products', 'pr_shortcode');
+		}
+		add_action('init', 'pr_init');
+
+// 	public function product_review_shortcode( $atts ) {
+// 		return "this is my product review";
+	
+
+// add_shortcode('products', 'product_review_shortcode');
+
+// 	}
+
+
+// 	function mfp_myfirstshortcode() {
+// 		return "testify";
+
+// 	}
+
+// 	function mfp_init() {
+// 		add_shortcode('myfirstshortcode', 'mfp_myfirstshortode');
+// 	} 
+// }
+
+// 	add_action('init', 'mfp_init');
+
+
+
+
