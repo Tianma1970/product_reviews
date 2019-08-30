@@ -552,10 +552,13 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 		function pr_shortcode() {
 			$pr_product = new WP_Query([ 
 				'post_type'			=> 'pr_product',
-				'posts_per_page'	=> 3,
+				//'post_type'			=> array('pr_product', 'post', 'pr_review'),
+				'posts_per_page'	=> -1,
+				//The current post not to be shown
+				'post__not_in'		=> array(get_the_ID())
 
 				]);
-				$output = "<h2>Products</h2>";
+				$output = "<h2>Other Products</h2>";
 				
 				if($pr_product->have_posts()) {
 					$output .= "<ul>";
@@ -591,26 +594,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 		}
 		add_action('init', 'pr_init');
 
-// 	public function product_review_shortcode( $atts ) {
-// 		return "this is my product review";
-	
 
-// add_shortcode('products', 'product_review_shortcode');
-
-// 	}
-
-
-// 	function mfp_myfirstshortcode() {
-// 		return "testify";
-
-// 	}
-
-// 	function mfp_init() {
-// 		add_shortcode('myfirstshortcode', 'mfp_myfirstshortode');
-// 	} 
-// }
-
-// 	add_action('init', 'mfp_init');
 
 
 
