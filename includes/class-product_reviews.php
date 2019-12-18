@@ -87,7 +87,7 @@ class Product_reviews {
 		$this->init_acf();
 
 		//add shortcode
-		//$this->product_review_shortcode();
+		//$this->pr_shortcode();
 
 
 	}
@@ -130,7 +130,7 @@ class Product_reviews {
 		/**
 		 * Including CPT
 		 */
-		//require_once plugin_dir_path( dirname( __FILE__ ) ) . //'includes/cpt/';
+		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/cpt/';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -244,7 +244,7 @@ class Product_reviews {
 	}
 
 	/**
-	 * Functon for filtering the content
+	 * Function for filtering the content
 	 */
 	public function filter_the_content($content) {
 		//if posttype is pr_product
@@ -255,14 +255,14 @@ class Product_reviews {
 
 			//Append div with terms if any
 			//var_dump($products);
-			$content .= '<div class="pr-product-type">' . $products . '</div>';
+			//$content .= '<div class="pr-product-type">' . $products . '</div>';
 
 			if(function_exists('get_field')) {
 				$price = get_field('price');
 
 				$content .= '<div class="product-details">';
-				$content .= '<h1><strong></strong>' . __('Product Info ', 'product_reviews') . '</strong></h1>';
-				$content .= '<p>' . __('Price: ', 'product_reviews') . $price . '</p>';
+				$content .= '<h1>' . __('Product Info ', 'product_reviews') . '</strong></h1>';
+				$content .= '<p>' . __('Price: ', 'product_reviews') . $price . '&nbsp; €</p>';
 				//show only if there are submittet data
 				if($products !== false) {
 					$content .= '<span class="products">' . __('Products: ', 'product_reviews') . '</span' . $products .= '<br>';
@@ -431,7 +431,7 @@ class Product_reviews {
 					'default_value' => '',
 					'placeholder' => '',
 					'prepend' => '',
-					'append' => '$',
+					'append' => '€',
 					'min' => '',
 					'max' => '',
 					'step' => '',
@@ -547,8 +547,9 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 
 	}
 //The Shortcode
-	
 }
+	
+
 		function pr_shortcode() {
 			$pr_product = new WP_Query([ 
 				'post_type'			=> 'pr_product',
@@ -569,14 +570,14 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 						$output .= "<li>";
 						$output .= "<a href='" . get_the_permalink() . "'>";
 						$output .= get_the_title();
-						$output .= "<p><i></i>";
+						$output .= "<p>";
 						$output .= "</a>";
 						$output .= "<small>";
 						$output .= "Price: ";
 						$output .= get_field('price');
 						$output .= " &euro;";
 						$output .= "</small>";
-						$output .= "</p></i>";;
+						$output .= "</p>";
 						$output .= "</li>";
 						$output .= "<hr>";
 						
@@ -588,11 +589,16 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 				}
 				return $output;
 		}
+
+	
 	
 		function pr_init() {
 			add_shortcode('products', 'pr_shortcode');
-		}
+	}
 		add_action('init', 'pr_init');
+	
+
+
 
 
 

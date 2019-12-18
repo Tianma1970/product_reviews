@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Product reviews
  * Plugin URI:        remlost.eu/portfolio
- * Description:       A plugin which shows the latest Product reviews
+ * Description:       A plugin which shows the latest and newest Product reviews
  * Version:           1.0.0
  * Author:            Tillmann Weimer
  * Author URI:        remlost.eu/animals
