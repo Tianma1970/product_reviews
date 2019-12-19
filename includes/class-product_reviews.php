@@ -568,10 +568,13 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 
 						
 						$output .= "<li>";
-						$output .= "<a href='" . get_the_permalink() . "'>";
+						//$output .= "<a href='" . get_the_permalink() . "'>";
 						$output .= get_the_title();
-						$output .= "<p>";
 						$output .= "</a>";
+						$output .= "<br>";
+						$output .= get_the_content();
+						$output .= "<p>";
+						$output .= "<br>";
 						$output .= "<small>";
 						$output .= "Price: ";
 						$output .= get_field('price');
