@@ -353,11 +353,11 @@ class Product_reviews {
 		register_post_type( "pr_product", $args );
 	
 
-	//add_action( 'init', 'cptui_register_my_cpts_pr_product' );
+		//add_action( 'init', 'cptui_register_my_cpts_pr_product' );
 
 		//Post type Product Review
 
-		//function cptui_register_my_cpts_pr_review() {
+	//public function cptui_register_my_cpts_pr_review() {
 
 	/**
 	 * Post Type: Reviews.
@@ -395,10 +395,10 @@ class Product_reviews {
 		register_post_type( "pr_review", $args );
 	//}
 
-	add_action( 'init', 'cptui_register_my_cpts_pr_review' );
+	//add_action( 'init', 'cptui_register_my_cpts_pr_review' );
 
 
-	}
+}
 	
 
 	public function init_acf(){
@@ -570,7 +570,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 						$output .= "<li>";
 						//$output .= "<a href='" . get_the_permalink() . "'>";
 						$output .= get_the_title();
-						$output .= "</a>";
+						//$output .= "</a>";
 						$output .= "<br>";
 						$output .= get_the_content();
 						$output .= "<p>";
@@ -590,7 +590,41 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 				} else {
 					$output .= "No Products available";
 				}
-				return $output;
+				//return $output;
+
+				$pr_review = new WP_Query([
+					'post_type'			=> 'pr_review',
+					'posts_per_page'	=> -1,
+				]);
+					/**
+					 * Output the product reviews
+					 */
+					$output .= "<h3>Product Reviews</h3>";
+					/**
+					 * Do we have Product Reviews?
+					 */
+					if($pr_review->have_posts()){
+						$output .="<ul>";
+						
+						while($pr_review->have_posts()){ 
+							$pr_review->the_post();
+
+							$output .= "<div class='product-details'>";
+							$output .= get_the_title();
+							$output .= "<br>";
+							$output .= "<p>Rating: ";
+							$output .= get_field('rating');
+							$output .= " av i allt 5 points";
+							$output .= "</p>";
+							$output .= "</div>";
+							
+						}
+							wp_reset_postdata();
+							$output .= "</ul>";
+					} else {
+						$output .= "No Reviews available";
+					}
+					return $output;
 		}
 
 	
