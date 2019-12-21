@@ -583,6 +583,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 						$output .= "</p>";
 						$output .= "</li>";
 						$output .= "<hr>";
+						$output .= the_terms(get_the_ID(), 'pr_product_type', _e('Product Type: ', 'product_reviews'));
 						
 					}
 					wp_reset_postdata();
@@ -590,7 +591,6 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 				} else {
 					$output .= "No Products available";
 				}
-				//return $output;
 
 				$pr_review = new WP_Query([
 					'post_type'			=> 'pr_review',
