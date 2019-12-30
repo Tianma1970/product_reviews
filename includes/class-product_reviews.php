@@ -553,7 +553,6 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 		function pr_shortcode() {
 			$pr_product = new WP_Query([ 
 				'post_type'			=> 'pr_product',
-				//'post_type'			=> array('pr_product', 'post', 'pr_review'),
 				'posts_per_page'	=> -1,
 				//The current post not to be shown
 				'post__not_in'		=> array(get_the_ID())
@@ -568,9 +567,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 
 						
 						$output .= "<li>";
-						//$output .= "<a href='" . get_the_permalink() . "'>";
 						$output .= get_the_title();
-						//$output .= "</a>";
 						$output .= "<br>";
 						$output .= get_the_content();
 						$output .= "<p>";
