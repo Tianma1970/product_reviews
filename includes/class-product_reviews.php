@@ -558,7 +558,9 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 				'post__not_in'		=> array(get_the_ID())
 
 				]);
-				$output = "<h2>Other Products</h2>";
+				$output = "<h2>";
+				$output .= __('Other Products', 'product_reviews');
+				$output .= "</h2>";
 				
 				if($pr_product->have_posts()) {
 					$output .= "<ul>";
@@ -573,7 +575,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 						$output .= "<p>";
 						$output .= "<br>";
 						$output .= "<small>";
-						$output .= "Price: ";
+						$output .= __('Price: ', 'product_reviews');
 						$output .= get_field('price');
 						$output .= " &euro;";
 						$output .= "</small>";
@@ -597,7 +599,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 					wp_reset_postdata();
 					$output .= "</ul>";
 				} else {
-					$output .= "No Products available";
+					$output .= __('No Products available', 'product_reviews');
 				}
 
 				$pr_review = new WP_Query([
@@ -607,7 +609,9 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 					/**
 					 * Output the product reviews
 					 */
-					$output .= "<h3>Product Reviews</h3>";
+					$output .= "<h3>";
+					$output .= __('Product Reviews', 'product_reviews');
+					$output .= "</h3>";
 					/**
 					 * Do we have Product Reviews?
 					 */
@@ -622,7 +626,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 							$output .= "<br>";
 							$output .= "<p>Rating: ";
 							$output .= get_field('rating');
-							$output .= " av i allt 5 points";
+							$output .= __(' of 5 points at all', 'product_reviews');
 							$output .= "</p>";
 							$output .= "</div>";
 							
@@ -630,7 +634,7 @@ add_action( 'init', 'cptui_register_my_taxes_pr_product_type' );
 							wp_reset_postdata();
 							$output .= "</ul>";
 					} else {
-						$output .= "No Reviews available";
+						$output .= __('No Reviews available', 'product_reviews');
 					}
 					return $output;
 		}

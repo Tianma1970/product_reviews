@@ -3,20 +3,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Product reviews 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/product_reviews_funkar\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: https://wordpress."
+"org/support/plugin/product_reviews_funkar\n"
+"Last-Translator: Tillmann <tillmann1970@gmail.com>\n"
+"Language-Team: Danish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2019-12-31T14:24:26+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.3.0\n"
+"PO-Revision-Date: 2019-12-31 14:50+0000\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Domain: product_reviews\n"
+"Language: da_DK\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.3.1; wp-5.3.2"
 
 #. Plugin Name of the plugin
 msgid "Product reviews"
-msgstr ""
+msgstr "Anmeldeser"
 
 #. Plugin URI of the plugin
 msgid "remlost.eu/portfolio"
@@ -24,7 +28,7 @@ msgstr ""
 
 #. Description of the plugin
 msgid "A plugin which shows the latest and newest Product reviews"
-msgstr ""
+msgstr "Et plugin som viser de seneste og nyeste produkt anmeldeser"
 
 #. Author of the plugin
 msgid "Tillmann Weimer"
@@ -36,45 +40,45 @@ msgstr ""
 
 #: includes/class-product_reviews.php:264
 msgid "Product Info "
-msgstr ""
+msgstr "Produkt Info"
 
 #: includes/class-product_reviews.php:265
 #: includes/class-product_reviews.php:578
 msgid "Price: "
-msgstr ""
+msgstr "Pris: "
 
 #: includes/class-product_reviews.php:268
 msgid "Products: "
-msgstr ""
+msgstr "Produkter:"
 
 #: includes/class-product_reviews.php:286
 msgid "Review Info "
-msgstr ""
+msgstr "Bedømmelse Info"
 
 #: includes/class-product_reviews.php:287
 msgid "Rating: "
-msgstr ""
+msgstr "Bedømmelse: "
 
 #: includes/class-product_reviews.php:288
 msgid "Product: "
-msgstr ""
+msgstr "Produkt: "
 
 #: includes/class-product_reviews.php:562
 msgid "Other Products"
-msgstr ""
+msgstr "Andre Produkter"
 
 #: includes/class-product_reviews.php:602
 msgid "No Products available"
-msgstr ""
+msgstr "Der findes ingen produkter"
 
 #: includes/class-product_reviews.php:613
 msgid "Product Reviews"
-msgstr ""
+msgstr "Produktanmeldeser"
 
 #: includes/class-product_reviews.php:629
 msgid " of 5 points at all"
-msgstr ""
+msgstr "  af 5 punkter i alt"
 
 #: includes/class-product_reviews.php:637
 msgid "No Reviews available"
-msgstr ""
+msgstr "Der findes ingen anmeldeser"
