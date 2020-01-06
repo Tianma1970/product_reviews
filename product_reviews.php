@@ -65,6 +65,11 @@ register_deactivation_hook( __FILE__, 'deactivate_product_reviews' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-product_reviews.php';
 
 /**
+ * include the pr_shortcode 
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/index.php';
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,
